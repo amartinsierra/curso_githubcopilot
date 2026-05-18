@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.caixaba.absis.micropersonas.exceptions.PersonaAlreadyExistsException;
+import com.caixaba.absis.micropersonas.exceptions.PersonaNotFoundException;
 import com.capgemini.micropersonas.api.domain.Persona;
 @Service
 public class PersonasServiceImpl implements PersonasService {
@@ -30,17 +32,26 @@ public class PersonasServiceImpl implements PersonasService {
 	@Override
 	public Persona createPersona(Persona persona) {
 		//añade la persona solo si no existe una persona con el mismo id.
-		//de vuelve la persona creada, o null si no se ha podido crear
-		if (personas.stream().anyMatch(p -> p.getId().equals(persona.getId()))) {
-			return null;
+		//de vuelve la persona creada, o lanza una PersonaAlreadyExistsException si ya existe una persona con el mismo id
+		if (getPersonaById(persona.getId()) == null) {
+			personas.add(persona);
+			return persona;
+		} else {
+			throw new PersonaAlreadyExistsException(persona.getId());
 		}
-		personas.add(persona);
-		return persona;
 	}
 
 	@Override
-	public void deletePersonaById(Integer id) {
-		personas.removeIf(p -> p.getId().equals(id));
+	public Persona deletePersonaById(Integer id) {
+		//si existe una persona con el id, la elimina y devuelve la persona eliminada. Si no existe, 
+		//genera una PersonaNotFoundException
+		Persona persona = getPersonaById(id);
+		if (persona != null) {
+			personas.remove(persona);
+			return persona;
+		} else {
+			throw new PersonaNotFoundException(id);
+		}
 
 	}
 

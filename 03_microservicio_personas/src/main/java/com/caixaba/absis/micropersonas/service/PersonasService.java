@@ -14,7 +14,7 @@ public interface PersonasService {
 	//método para crear una persona
 	public Persona createPersona(Persona persona);
 	//método para eliminar una persona por su id
-	public void deletePersonaById(Integer id);
+	public Persona deletePersonaById(Integer id);
 	//método para obtener personas por rango de edad
 	public List<Persona> getPersonasByEdadRange(Integer min, Integer max);
 	
