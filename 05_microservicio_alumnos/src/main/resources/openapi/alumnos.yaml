@@ -97,7 +97,7 @@ components:
       required:
         - dni
         - nombre
-        - email
+        - calificacion
         - curso
       properties:
         dni:
