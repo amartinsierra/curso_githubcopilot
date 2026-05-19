@@ -1,0 +1,5 @@
+-securización con JWT
+-generación de token desde un controlador que recibe un JSON con username y password
+-la clave para firma definida en archivo application.properties
+-Tres usuarios de prueba, dos en el rol USER y uno en ADMIN
+-Altas y eliminaciones solo ADMIN, resto de operaciones usuarios autenticados
