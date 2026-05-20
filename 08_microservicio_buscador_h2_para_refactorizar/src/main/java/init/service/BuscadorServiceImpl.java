@@ -9,24 +9,28 @@ import init.model.Item;
 import init.repository.ItemsRepository;
 @Service
 public class BuscadorServiceImpl implements BuscadorService {
-	@Autowired
-	ItemsRepository itemsRepository;	
 	
+	private final ItemsRepository itemsRepository;	
+	
+	public BuscadorServiceImpl(ItemsRepository itemsRepository) {
+		this.itemsRepository = itemsRepository;
+	}
+
 	@Override
 	public List<Item> buscarPorTematica(String tematica) {
 		return itemsRepository.findByTematica(tematica);
 	}
 	@Override
-	public boolean nuevoItem(Item item) {
-		if(itemsRepository.findFirstByUrl(item.getUrl())==null) {
+	public Boolean nuevoItem(Item item) {
+		if(itemsRepository.findFirstByUrl(item.getUrl()).isEmpty()) {
 			itemsRepository.save(item);
-			return true;
+			return Boolean.TRUE;
 		}
-		return false;
+		return Boolean.FALSE;
 	}
 	@Override
 	public void eliminarPorTematica(String tematica) {
-		if(itemsRepository.countByTematica(tematica)>0) {
+		if(itemsRepository.countByTematica(tematica)>0L) {
 			itemsRepository.deleteByTematica(tematica);
 		}
 		

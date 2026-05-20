@@ -2,7 +2,9 @@ package init.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,15 +30,19 @@ public class BuscadorController {
 	}
 	@Operation(summary = "busqueda de items por temática",description = "devuelve la lista de items asociados a la temática recibida como parámetro")
 	@GetMapping(value="items",produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Item> items(@Parameter(description = "tematica de búsqueda") @RequestParam String tematica){
-		return this.buscadorService.buscarPorTematica(tematica);
+	public ResponseEntity<List<Item>> items(@Parameter(description = "tematica de búsqueda") @RequestParam String tematica){
+		return new ResponseEntity<>(this.buscadorService.buscarPorTematica(tematica), HttpStatus.OK);
 	}
 	@PostMapping(value="items",consumes=MediaType.APPLICATION_JSON_VALUE)
-	public void alta(@RequestBody Item item) {
-		this.buscadorService.nuevoItem(item);
+	public ResponseEntity<Void> alta(@RequestBody Item item) {
+		if(this.buscadorService.nuevoItem(item)) {
+			return new ResponseEntity<>(HttpStatus.CREATED);
+		}
+		return new ResponseEntity<>(HttpStatus.CONFLICT);
 	}
 	@DeleteMapping(value="items")
-	public void eliminar(@RequestParam String tematica){
+	public ResponseEntity<Void> eliminar(@RequestParam String tematica){
 		this.buscadorService.eliminarPorTematica(tematica);		
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 }

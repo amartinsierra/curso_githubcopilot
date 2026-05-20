@@ -6,6 +6,6 @@ import init.model.Item;
 
 public interface BuscadorService {
 	List<Item> buscarPorTematica(String tematica);
-	boolean nuevoItem(Item item);
+	Boolean nuevoItem(Item item);
 	void eliminarPorTematica(String tematica);
 }

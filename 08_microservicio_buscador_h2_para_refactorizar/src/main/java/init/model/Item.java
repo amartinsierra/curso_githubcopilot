@@ -12,11 +12,11 @@ import jakarta.persistence.Table;
 public class Item {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idItem;
+	private Integer idItem;
 	private String url;
 	private String tematica;
 	private String descripcion;
-	public Item(int idItem, String url, String tematica, String descripcion) {
+	public Item(Integer idItem, String url, String tematica, String descripcion) {
 		super();
 		this.idItem = idItem;
 		this.url = url;
@@ -26,10 +26,10 @@ public class Item {
 	public Item() {
 		super();
 	}
-	public int getIdItem() {
+	public Integer getIdItem() {
 		return idItem;
 	}
-	public void setIdItem(int idItem) {
+	public void setIdItem(Integer idItem) {
 		this.idItem = idItem;
 	}
 	public String getUrl() {

@@ -17,7 +17,5 @@ public interface ItemsRepository extends JpaRepository<Item,Integer>{
 	@Modifying
 	void deleteByTematica(String tematica);
 
-	
-	@Query(value = "select count(*) from items where tematica=?1",nativeQuery = true)
-	int countByTematica(String tematica);
+	Long countByTematica(String tematica);
 }
